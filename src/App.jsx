@@ -1,14 +1,38 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+
 import "./App.css";
+import Header from "./components/Header/Header";
+import Blogs from "./components/Blogs/Blogs";
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [bookmarks, setBookmarks] = useState([]);
+
+  const handleAddToBookmark = (blog) => {
+    // console.log("bookmark adding soon");
+    // console.log(blog);
+
+    const newBookmark = [...bookmarks, blog];
+    setBookmarks(newBookmark);
+  };
+
+  const [readingTime, setReadingTime] = useState(0);
+
+  const handleMarkAsRead = (time) => {
+    // console.log("marks as read", time);
+    setReadingTime(readingTime + time);
+  };
 
   return (
     <>
-      <h1 className="text-3xl bg-red-300">Knowledge Cafe</h1>
+      <Header></Header>
+      <div className="md:flex max-w-7xl mx-auto">
+        <Blogs
+          handleAddToBookmark={handleAddToBookmark}
+          handleMarkAsRead={handleMarkAsRead}
+        ></Blogs>
+        <Bookmarks bookmarks={bookmarks} readingTime={readingTime}></Bookmarks>
+      </div>
     </>
   );
 }
